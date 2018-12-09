@@ -1,0 +1,25 @@
+---
+## iptables_persistent_ip4:
+##   INPUT:
+##     jump: ACCEPT
+- name: set "{{ __chain }}" rules
+  iptables:
+    chain: "{{ __chain }}"
+    comment: "{{ item.comment|mandatory() }}"
+    ctstate: "{{ item.ctstate|default(omit) }}"
+    destination: "{{ item.destination|default(omit) }}"
+    destination_port: "{{ item.destination_port|default(omit) }}"
+    in_interface: "{{ item.in_interface|default(omit) }}"
+    ip_version: "{{ iptables_persistent_ip_version }}"
+    jump: "{{ item.jump|default(omit) }}"
+    limit: "{{ item.limit|default(omit) }}"
+    limit_burst: "{{ item.limit_burst|default(omit) }}"
+    out_interface: "{{ item.out_interface|default(omit) }}"
+    policy: "{{ item.policy|default(omit) }}"
+    protocol: "{{ item.protocol|default(omit) }}"
+    source: "{{ item.source|default(omit) }}"
+    source_port: "{{ item.source_port|default(omit) }}"
+    action: "{{ item.action|default(omit) }}"
+    state: "{{ item.state|default(omit) }}"
+  loop: "{{ iptables_persistent_ipv4[__chain] }}"
+  notify: persist_iptables
