@@ -1,14 +1,17 @@
 galaxy_info:
   author: Stefan Jakobs
   description: Install iptables-persistent and manage rule set
+  namespace: stefjakobs
+  role_name: iptables_persistent
   license: MIT
-  min_ansible_version: 2.2.0.0
+  min_ansible_version: 2.9.0
   platforms:
     - name: Debian
       versions:
         - wheezy
         - jessie
         - stretch
+        - bullseye
     - name: Ubuntu
       versions:
         - precise

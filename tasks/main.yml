@@ -1,22 +1,21 @@
 ---
 - name: install iptables-persistent
-  package:
+  ansible.builtin.package:
     name: iptables-persistent
     state: present
   when: ansible_os_family == "Debian"
 
 - name: include iptables rules per chain
-  include_tasks: rules.yml
+  ansible.builtin.include_tasks: rules.yml
   when: iptables_persistent_ipv4[__chain] is defined
   loop: ['INPUT', 'OUTPUT', 'FORWARD', 'PREROUTING', 'POSTROUTING']
   loop_control:
     loop_var: __chain
   vars:
     iptables_persistent_ip_version: 'ipv4'
-  notify: persist_iptables
 
 - name: include ip6tables rules per chain
-  include_tasks: rules.yml
+  ansible.builtin.include_tasks: rules.yml
   when: iptables_persistent_ipv6[__chain] is defined
   loop: ['INPUT', 'OUTPUT', 'FORWARD', 'PREROUTING', 'POSTROUTING']
   loop_control:
